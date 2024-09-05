@@ -1,0 +1,75 @@
+.articles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 50px;
+  margin-top: 120px;
+  padding: 0 50px;
+  box-sizing: border-box;
+}
+
+.article {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.articleImage {
+  width: 100%;
+  height: 524px;
+  display: block;
+  filter: brightness(65%);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #292830;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  z-index: 1;
+}
+
+.titleMain {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 48px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.briefInfo {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 24px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.articleButton {
+  padding: 8px 25px;
+  cursor: pointer;
+  border: 1px solid white;
+  color: black;
+  border-radius: 30px;
+  font-size: 28px;
+  margin-top: 45px;
+  background-color: #ffffff;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.articleButton:hover {
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+  background-color: #e0e0e0;
+}
