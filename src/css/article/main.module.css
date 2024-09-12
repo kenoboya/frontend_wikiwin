@@ -35,6 +35,37 @@
   max-height: max-content;
   box-sizing: border-box;
   align-items: stretch;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+  box-sizing: border-box; /* Убедитесь, что padding не добавляет ширину */
+}
+
+.mw-brief-info h1 {
+  font-size: 52px;
+  color: #073037;
+  font-family: "Open Sans";
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  line-height: 1.3;
+  border-bottom: 2px solid #073037;
+  padding-bottom: 10px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.mw-brief-info p {
+  font-size: 32px;
+  color: #000000;
+  font-family: "Open Sans", sans-serif;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
 }
 
 .mw-main-info {
@@ -48,24 +79,7 @@
   box-sizing: border-box;
   align-items: stretch;
 }
-.mw-brief-info h1 {
-  font-size: 52px;
-  color: #073037;
-  font-family: "Open Sans";
-  font-weight: bold;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  line-height: 1.3;
-  border-bottom: 2px solid #073037;
-  padding-bottom: 10px;
-}
 
-.mw-brief-info p {
-  font-size: 32px;
-  color: #000000;
-  font-family: "Open Sans", sans-serif;
-}
 .mw-main-info h2 {
   font-size: 36px;
   color: #073037;

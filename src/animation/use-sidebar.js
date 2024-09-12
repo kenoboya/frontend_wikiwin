@@ -20,7 +20,7 @@ const renderMenu = (items) => (
   </ol>
 );
 
-export const useMenu = () => {
+export const useMenu = (dependencies = []) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const mainContentRef = useRef(null);
   const [menuLinks, setMenuLinks] = useState([]);
@@ -40,8 +40,13 @@ export const useMenu = () => {
       }
     };
 
-    updateMenu();
-  }, [mainContentRef.current, buildMenuHierarchy]);
+    // Используйте setTimeout для отложенного обновления меню
+    const timer = setTimeout(() => {
+      updateMenu();
+    }, 100); // Можете настроить время по необходимости
+
+    return () => clearTimeout(timer);
+  }, [mainContentRef.current, ...dependencies]);
 
   return {
     isCollapsed,

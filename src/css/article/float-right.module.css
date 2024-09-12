@@ -7,6 +7,9 @@
   overflow: hidden;
   padding: 0;
   box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  max-width: 35%;
 }
 
 .mw-float-right::before {
@@ -28,6 +31,7 @@
   margin: 20px;
   justify-content: center;
 }
+
 .mw-article-photo img {
   width: 350px;
   height: 325px;
@@ -37,6 +41,7 @@
 .mw-article-title {
   margin-bottom: 25px;
 }
+
 .mw-article-title h1 {
   color: whitesmoke;
   margin-top: 2px;
@@ -64,6 +69,8 @@
   flex-direction: column;
   gap: 20px;
   padding-bottom: 30px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .mw-content > div {
