@@ -6,7 +6,7 @@ export const buildMenuHierarchy = (headings) => {
   headings.forEach((heading, index) => {
     const level = parseInt(heading.tagName.substring(1), 10);
     let id =
-      heading.id || heading.textContent.toLowerCase().replace(/\s+/g, "-");
+      heading.id || heading.textContent.toLowerCase().replace(/\s+/g, '-');
 
     let uniqueId = id;
     let counter = 1;
@@ -47,7 +47,7 @@ export const handleScrollTo = (id) => {
 
     window.scrollTo({
       top: offsetPosition,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   }
 };
