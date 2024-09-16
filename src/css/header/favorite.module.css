@@ -1,0 +1,169 @@
+.favorite {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.favoriteMenu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 550px;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.favoriteMenu.open {
+  display: block;
+}
+
+.favoriteButton {
+  background: whitesmoke;
+  border-radius: 100%;
+  width: 45px;
+  height: 45px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 15px;
+  justify-content: center;
+}
+
+.favoriteIcon {
+  font-size: 24px;
+  color: #333;
+}
+
+.favoriteHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.favoriteHeader h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.favoriteHeaderButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.favoriteHeaderButton i {
+  font-size: 20px;
+  color: #333;
+}
+
+.favoriteContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.favoriteContent ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.favoriteContent li {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.favoriteContent li:last-child {
+  border-bottom: none;
+}
+
+.authorProfile {
+  display: flex;
+  flex-direction: column;
+  max-width: 25%;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.authorProfile a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.authorProfile img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.authorProfile span {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+}
+
+.favoriteArticle {
+  display: flex;
+  align-items: center;
+  padding: 0px 10px 0px 0px;
+}
+
+.favoriteArticle a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.favoriteArticleDescription {
+  flex: 1;
+}
+
+.favoriteArticleDescription h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.favoriteArticleDescription span {
+  font-size: 14px;
+  color: #666;
+}
+
+.favoriteArticlePhoto {
+  margin-left: 10px;
+}
+
+.favoriteArticlePhoto img {
+  width: 100px;
+  height: 75px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.favoriteArticleButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0px 0px 0px 20px;
+  margin: 0;
+}
+.favoriteArticleButton i {
+  font-size: 24px;
+  color: #292830;
+}

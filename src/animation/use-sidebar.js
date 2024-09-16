@@ -39,11 +39,9 @@ export const useMenu = (dependencies = []) => {
         setMenuLinks(menuHierarchy);
       }
     };
-
-    // Используйте setTimeout для отложенного обновления меню
     const timer = setTimeout(() => {
       updateMenu();
-    }, 100); // Можете настроить время по необходимости
+    }, 100);
 
     return () => clearTimeout(timer);
   }, [mainContentRef.current, ...dependencies]);
