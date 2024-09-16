@@ -86,7 +86,6 @@
 .favoriteContent li:last-child {
   border-bottom: none;
 }
-
 .authorProfile {
   display: flex;
   flex-direction: column;
@@ -127,7 +126,7 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: inherit;
+  cursor: pointer;
 }
 
 .favoriteArticleDescription {
@@ -166,4 +165,43 @@
 .favoriteArticleButton i {
   font-size: 24px;
   color: #292830;
+}
+
+.favoriteArticleButton i.active {
+  color: gold;
+}
+
+.favoriteSettings {
+  position: absolute;
+  top: 10px;
+  right: 45px;
+  min-width: 150px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.favoriteSettings.open {
+  display: block;
+}
+
+.favoriteSettings ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.favoriteSettings li {
+  padding: 5px 0;
+}
+
+.favoriteSettings a {
+  text-decoration: none;
+  color: #292830;
+  cursor: pointer;
+}
+
+.favoriteSettings li:hover {
+  background-color: rgb(243, 243, 243);
 }

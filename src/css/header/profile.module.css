@@ -9,7 +9,7 @@
 
 .profileMenu {
   position: absolute;
-  margin-top: 150px;
+  margin-top: calc(100% + 200px);
   right: 100%;
   margin-right: 15px;
   background-color: whitesmoke;
