@@ -5,12 +5,22 @@ import profileStyles from '../../css/header/profile.module.css';
 function Profile() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const user = await fetchUserProfile();
-      if (user) {
-        setUserData(user);
+      try {
+        const user = await fetchUserProfile();
+        if (user) {
+          setUserData(user);
+        } else {
+          setUserData(null);
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        setUserData(null);
+      } finally {
+        setLoading(false);
       }
     };
     fetchProfile();
@@ -19,6 +29,10 @@ function Profile() {
   const toggleProfileMenu = () => {
     setIsProfileOpen((prevState) => !prevState);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className={profileStyles.profile}>

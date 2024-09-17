@@ -1,28 +1,64 @@
 import React, { useState, useEffect } from 'react';
-import { fetchUserProfile } from '../../api/routes/authorization';
+import { fetchUserProfile } from '../../api/routes/authorization'; // Импорт функции для получения профиля
 import favoriteStyles from '../../css/header/favorite.module.css';
 
 function Favorite() {
-  const [isFavoriteOpen, setIsFavoriteOpen] = useState(false);
-  const [userData, setUserData] = useState(null);
+  const [state, setState] = useState({
+    isFavoriteOpen: false,
+    isFavoriteSettingsOpen: false,
+    isFavorite: false,
+    userData: null,
+    loading: true,
+  });
+
+  const toggleFavoriteMenu = (e) => {
+    e.stopPropagation();
+    setState((prevState) => ({
+      ...prevState,
+      isFavoriteOpen: !prevState.isFavoriteOpen,
+    }));
+  };
+
+  const toggleFavoriteSettings = (e) => {
+    e.stopPropagation();
+    setState((prevState) => ({
+      ...prevState,
+      isFavoriteSettingsOpen: !prevState.isFavoriteSettingsOpen,
+    }));
+  };
+
+  const handleFavoriteClick = (e) => {
+    e.stopPropagation();
+    setState((prevState) => ({
+      ...prevState,
+      isFavorite: !prevState.isFavorite,
+    }));
+  };
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const user = await fetchUserProfile();
-      if (user) {
-        setUserData(user);
+      try {
+        const user = await fetchUserProfile();
+        setState((prevState) => ({
+          ...prevState,
+          userData: user || null,
+          loading: false,
+        }));
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        setState((prevState) => ({
+          ...prevState,
+          userData: null,
+          loading: false,
+        }));
       }
     };
     fetchProfile();
   }, []);
 
-  const toggleFavoriteMenu = (e) => {
-    e.stopPropagation();
-    if (userData) {
-      // Only open menu if user is authenticated
-      setIsFavoriteOpen(!isFavoriteOpen);
-    }
-  };
+  if (state.loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className={favoriteStyles.favorite} onClick={toggleFavoriteMenu}>
@@ -31,19 +67,35 @@ function Favorite() {
       </button>
       <div
         className={`${favoriteStyles.favoriteMenu} ${
-          isFavoriteOpen ? favoriteStyles.open : ''
+          state.isFavoriteOpen ? favoriteStyles.open : ''
         }`}
       >
-        {userData ? (
+        {state.userData ? (
           <>
             <div className={favoriteStyles.favoriteHeader}>
               <h1>Favorite articles</h1>
               <button
                 className={favoriteStyles.favoriteHeaderButton}
-                onClick={(e) => e.stopPropagation()}
+                onClick={toggleFavoriteSettings}
               >
                 <i className="ri-settings-5-line"></i>
               </button>
+              {state.isFavoriteSettingsOpen && (
+                <div className={favoriteStyles.favoriteSettings}>
+                  <ul>
+                    <li>
+                      <a>
+                        <span>Sort by date</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span>Sort by A-Z</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </div>
             <div className={favoriteStyles.favoriteContent}>
               <ul>
@@ -75,6 +127,16 @@ function Favorite() {
                         />
                       </div>
                     </a>
+                    <button
+                      className={favoriteStyles.favoriteArticleButton}
+                      onClick={handleFavoriteClick}
+                    >
+                      <i
+                        className={`ri-star-fill ${
+                          state.isFavorite ? favoriteStyles.active : ''
+                        }`}
+                      ></i>
+                    </button>
                   </div>
                 </li>
               </ul>

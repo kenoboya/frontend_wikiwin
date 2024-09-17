@@ -32,10 +32,6 @@ function Registration() {
     setCountriesAndCities(data);
   }, []);
 
-  const handleSignUp = () => {
-    navigate('/');
-  };
-
   const handleDateChange = (e) => setBirthDate(e.target.value);
   const handleGenderChange = (e) => setGender(e.target.value);
   const handleCountryChange = (e) => {
@@ -96,6 +92,7 @@ function Registration() {
         console.error('Form submission failed');
       }
     }
+    navigate('/');
   };
 
   return (
@@ -317,7 +314,7 @@ function Registration() {
           <button
             className={signUpStyles.submitButton}
             type="submit"
-            onClick={handleSignUp}
+            onClick={handleSubmit}
           >
             Sign up
           </button>
