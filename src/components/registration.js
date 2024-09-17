@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import signUpStyles from '../css/sign-up.module.css';
-import { submitRegistration } from '../api/routes/sign-up';
+import { submitRegistration } from '../api/routes/registration';
+import { useNavigate } from 'react-router-dom';
 
 const getCountriesAndCities = () => {
   return {
@@ -11,6 +12,7 @@ const getCountriesAndCities = () => {
 };
 
 function Registration() {
+  const navigate = useNavigate();
   const [birthDate, setBirthDate] = useState('');
   const [gender, setGender] = useState('');
   const [country, setCountry] = useState('');
@@ -29,6 +31,10 @@ function Registration() {
     const data = getCountriesAndCities();
     setCountriesAndCities(data);
   }, []);
+
+  const handleSignUp = () => {
+    navigate('/');
+  };
 
   const handleDateChange = (e) => setBirthDate(e.target.value);
   const handleGenderChange = (e) => setGender(e.target.value);
@@ -308,7 +314,11 @@ function Registration() {
             value={image}
             onChange={handleImageChange}
           />
-          <button className={signUpStyles.submitButton} type="submit">
+          <button
+            className={signUpStyles.submitButton}
+            type="submit"
+            onClick={handleSignUp}
+          >
             Sign up
           </button>
         </form>

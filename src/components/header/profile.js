@@ -29,10 +29,10 @@ function Profile() {
         <img
           src={
             userData
-              ? userData.profileImage
+              ? userData.image
               : 'https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg'
           }
-          alt={userData ? 'Your account profile' : 'Log in'}
+          alt={userData ? 'Your account profile' : 'Login'}
           className={profileStyles.profileImage}
         />
       </button>
@@ -45,7 +45,7 @@ function Profile() {
           <>
             <div className={profileStyles.profileMenuHeader}>
               <div className={profileStyles.profileMenuHeaderImage}>
-                <img src={userData.profileImage} alt="Your account profile" />
+                <img src={userData.image} alt="Your account profile" />
               </div>
               <div className={profileStyles.profileMenuHeaderName}>
                 <div className={profileStyles.profileMenuHeaderNameMain}>
@@ -88,7 +88,7 @@ function Profile() {
             <li>
               <a href="/login">
                 <i className="ri-login-box-line"></i>
-                <span>Log in</span>
+                <span>Login</span>
               </a>
             </li>
             <li>
