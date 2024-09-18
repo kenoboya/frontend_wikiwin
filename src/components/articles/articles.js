@@ -36,7 +36,7 @@ const Articles = () => {
               key={article.article_id}
               image={article.image}
               title={article.title}
-              leadSection={article.leadSection}
+              leadSection={article.description}
             />
           ))
         ) : (

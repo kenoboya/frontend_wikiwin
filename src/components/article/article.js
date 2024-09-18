@@ -1,10 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import sidebarStyles from "../../css/article/sidebar.module.css";
-import mainStyles from "../../css/article/main.module.css";
-import floatRightStyles from "../../css/article/float-right.module.css";
-import { useMenu } from "../../animation/use-sidebar.js";
-import { fetchArticle } from "../../api/routes/article.js";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import sidebarStyles from '../../css/article/sidebar.module.css';
+import mainStyles from '../../css/article/main.module.css';
+import floatRightStyles from '../../css/article/float-right.module.css';
+import { useMenu } from '../../animation/use-sidebar.js';
+import { fetchArticle } from '../../api/routes/article.js';
+import {
+  sendFavoriteArticles,
+  deleteFavoriteArticles,
+  fetchFavoriteArticles,
+} from '../../api/routes/favorite.js';
 
 const Article = () => {
   const { title } = useParams();
@@ -13,6 +18,20 @@ const Article = () => {
   const [article, setArticle] = useState(null);
   const [chapters, setChapters] = useState([]);
   const [infoBox, setInfoBox] = useState(null);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const handleFavoriteClick = async (articleId) => {
+    try {
+      if (isFavorite) {
+        await deleteFavoriteArticles(articleId);
+      } else {
+        await sendFavoriteArticles(articleId);
+      }
+      setIsFavorite((prev) => !prev);
+    } catch (error) {
+      console.error('Error while toggling favorite:', error);
+    }
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -22,9 +41,15 @@ const Article = () => {
           setArticle(data.Article);
           setChapters(data.Chapters);
           setInfoBox(data.InfoBox);
+
+          const favoriteArticles = await fetchFavoriteArticles();
+          const isArticleFavorite = favoriteArticles.some(
+            (fav) => fav.article_id === data.Article.article_id
+          );
+          setIsFavorite(isArticleFavorite);
         }
       } catch (error) {
-        console.error("Failed to fetch article data", error);
+        console.error('Failed to fetch article data', error);
       }
     };
 
@@ -64,60 +89,74 @@ const Article = () => {
 
   return (
     <main>
-      <div className={sidebarStyles["mw-parser-output"]}>
+      <div className={sidebarStyles['mw-parser-output']}>
         <div
-          className={`${sidebarStyles["mw-side-nav"]} ${
-            isCollapsed ? sidebarStyles.collapsed : ""
+          className={`${sidebarStyles['mw-side-nav']} ${
+            isCollapsed ? sidebarStyles.collapsed : ''
           }`}
         >
           <div
-            className={sidebarStyles["mw-side-nav-control"]}
+            className={sidebarStyles['mw-side-nav-control']}
             onClick={handleToggle}
             id="menu-toggle"
           >
             <i className="ri-align-justify"></i>
           </div>
-          <div className={sidebarStyles["pop-up-menu"]}></div>
-          <div className={sidebarStyles["nav-links"]}>
+          <div className={sidebarStyles['pop-up-menu']}></div>
+          <div className={sidebarStyles['nav-links']}>
             {renderMenu(menuLinks)}
           </div>
         </div>
         <div
-          className={`${mainStyles["mw-body"]} ${
-            isCollapsed ? mainStyles.collapsed : ""
+          className={`${mainStyles['mw-body']} ${
+            isCollapsed ? mainStyles.collapsed : ''
           }`}
           ref={mainContentRef}
         >
           <div
-            className={`${mainStyles["mw-body-header"]} ${
-              isCollapsed ? mainStyles.collapsed : ""
+            className={`${mainStyles['mw-body-header']} ${
+              isCollapsed ? mainStyles.collapsed : ''
             }`}
           >
-            <div id="BriefInfo" className={mainStyles["mw-brief-info"]}>
+            <div id="BriefInfo" className={mainStyles['mw-brief-info']}>
               <h1>{article.title}</h1>
-              <p>{article.leadSection}</p>
+              <p>{article.description}</p>
             </div>
 
-            <div id="InfoBox" className={floatRightStyles["mw-float-right"]}>
-              <div className={floatRightStyles["mw-article-photo"]}>
+            <div id="InfoBox" className={floatRightStyles['mw-float-right']}>
+              <div className={floatRightStyles['mw-article-photo']}>
+                <div className={floatRightStyles['mw-article-favorite']}>
+                  <button
+                    onClick={() => handleFavoriteClick(article.article_id)}
+                  >
+                    <i
+                      className={`ri-bookmark-${isFavorite ? 'fill' : 'fill'}`}
+                      style={{
+                        color: isFavorite
+                          ? 'rgb(255, 0, 0)'
+                          : 'rgb(23, 228, 81)',
+                      }}
+                    ></i>
+                  </button>
+                </div>
                 <img src={article.image} alt="article photo" />
-                <div className={floatRightStyles["mw-article-title"]}>
+                <div className={floatRightStyles['mw-article-title']}>
                   <h1>{article.title}</h1>
                 </div>
               </div>
-              <div className={floatRightStyles["mw-content"]}>
+              <div className={floatRightStyles['mw-content']}>
                 {Object.entries(infoBox).map(
                   ([key, value]) =>
                     value != null &&
-                    !key.includes("info_box") && (
+                    !key.includes('info_box') && (
                       <div key={key}>
                         <h5>
                           {key
-                            .replace(/_/g, " ")
+                            .replace(/_/g, ' ')
                             .toLowerCase()
                             .replace(/\b\w/g, (char) =>
                               char.toUpperCase()
-                            )}{" "}
+                            )}{' '}
                         </h5>
                         <span>{value}</span>
                       </div>
@@ -127,7 +166,7 @@ const Article = () => {
             </div>
           </div>
           <div>
-            <div id="MainInfo" className={mainStyles["mw-main-info"]}>
+            <div id="MainInfo" className={mainStyles['mw-main-info']}>
               {chapters.map(renderChapter)}
             </div>
           </div>

@@ -120,21 +120,22 @@
   display: flex;
   align-items: center;
   padding: 0px 10px 0px 0px;
-}
-
-.favoriteArticle a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
   cursor: pointer;
 }
 
 .favoriteArticleDescription {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   flex: 1;
 }
 
 .favoriteArticleDescription h1 {
+  justify-content: center;
+  align-items: center;
   margin: 0;
+  margin-bottom: 5px;
   font-size: 18px;
   font-weight: bold;
 }
@@ -159,16 +160,13 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0px 0px 0px 20px;
+  padding: 0px 0px 0px 0px;
   margin: 0;
 }
+
 .favoriteArticleButton i {
   font-size: 24px;
   color: #292830;
-}
-
-.favoriteArticleButton i.active {
-  color: gold;
 }
 
 .favoriteSettings {

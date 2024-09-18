@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import signUpStyles from '../css/sign-up.module.css';
+import { useNavigate } from 'react-router-dom';
 import { submitLogin } from '../api/routes/authentication';
 
 function Login() {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [formErrors, setFormErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleLoginChange = (e) => setLogin(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -22,18 +24,18 @@ function Login() {
     e.preventDefault();
     if (validateForm()) {
       const data = {
-        UserSignIn: {
-          login,
-          password,
-        },
+        login,
+        password,
       };
+      console.log('Data to submit:', data);
       try {
         await submitLogin(data);
         console.log('Form submitted successfully');
       } catch (error) {
-        console.error('Form submission failed');
+        console.error('Form submission failed:', error);
       }
     }
+    navigate('/');
   };
 
   return (

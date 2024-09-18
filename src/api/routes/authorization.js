@@ -1,14 +1,22 @@
-export const clearTokens = () => {
-  document.cookie =
-    'access_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
-  document.cookie =
-    'refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
-};
+export async function fetchSignOut() {
+  try {
+    const response = await fetch('/sign-out', {
+      method: 'GET',
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to sign out');
+    }
+  } catch (error) {
+    console.error('Error during sign out:', error);
+  }
+}
 
 const refreshToken = async () => {
   try {
     const response = await fetch('/refresh', {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },

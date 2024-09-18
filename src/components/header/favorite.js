@@ -1,22 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { fetchUserProfile } from '../../api/routes/authorization'; // Импорт функции для получения профиля
+import { fetchUserProfile } from '../../api/routes/authorization';
 import favoriteStyles from '../../css/header/favorite.module.css';
+import fetchFavoriteArticles from '../../api/routes/favorite';
+import { useNavigationForArticles } from '../../animation/utils';
+import { deleteFavoriteArticles } from '../../api/routes/favorite';
 
 function Favorite() {
   const [state, setState] = useState({
     isFavoriteOpen: false,
     isFavoriteSettingsOpen: false,
-    isFavorite: false,
     userData: null,
-    loading: true,
+    favoriteArticles: [],
+    loading: false,
   });
 
-  const toggleFavoriteMenu = (e) => {
+  const { navigateTo, formatTitleForUrl } = useNavigationForArticles();
+
+  const toggleFavoriteMenu = async (e) => {
     e.stopPropagation();
-    setState((prevState) => ({
-      ...prevState,
-      isFavoriteOpen: !prevState.isFavoriteOpen,
-    }));
+    setState((prevState) => {
+      const newFavoriteOpen = !prevState.isFavoriteOpen;
+      if (newFavoriteOpen) {
+        fetchArticles();
+      }
+      return {
+        ...prevState,
+        isFavoriteOpen: newFavoriteOpen,
+      };
+    });
   };
 
   const toggleFavoriteSettings = (e) => {
@@ -27,38 +38,67 @@ function Favorite() {
     }));
   };
 
-  const handleFavoriteClick = (e) => {
+  const handleFavoriteClick = async (e, article_id) => {
     e.stopPropagation();
-    setState((prevState) => ({
-      ...prevState,
-      isFavorite: !prevState.isFavorite,
-    }));
+    try {
+      await deleteFavoriteArticles(article_id);
+      setState((prevState) => ({
+        ...prevState,
+        favoriteArticles: prevState.favoriteArticles.filter(
+          (article) => article.article_id !== article_id
+        ),
+      }));
+    } catch (error) {
+      console.error('Failed to delete favorite article:', error);
+    }
+  };
+
+  const fetchProfile = async () => {
+    try {
+      const user = await fetchUserProfile();
+      setState((prevState) => ({
+        ...prevState,
+        userData: user || null,
+      }));
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      setState((prevState) => ({
+        ...prevState,
+        userData: null,
+      }));
+    }
+  };
+
+  const fetchArticles = async () => {
+    setState((prevState) => ({ ...prevState, loading: true }));
+    try {
+      const articles = await fetchFavoriteArticles();
+      setState((prevState) => ({
+        ...prevState,
+        favoriteArticles: articles || [],
+        loading: false,
+      }));
+    } catch (error) {
+      console.error('Error fetching articles:', error);
+      setState((prevState) => ({
+        ...prevState,
+        loading: false,
+      }));
+    }
   };
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const user = await fetchUserProfile();
-        setState((prevState) => ({
-          ...prevState,
-          userData: user || null,
-          loading: false,
-        }));
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
-        setState((prevState) => ({
-          ...prevState,
-          userData: null,
-          loading: false,
-        }));
-      }
-    };
     fetchProfile();
   }, []);
 
   if (state.loading) {
     return <div>Loading...</div>;
   }
+
+  const handleArticleClick = (article) => {
+    const formattedTitle = formatTitleForUrl(article.title);
+    navigateTo(`/articles/${formattedTitle}`);
+  };
 
   return (
     <div className={favoriteStyles.favorite} onClick={toggleFavoriteMenu}>
@@ -84,14 +124,10 @@ function Favorite() {
                 <div className={favoriteStyles.favoriteSettings}>
                   <ul>
                     <li>
-                      <a>
-                        <span>Sort by date</span>
-                      </a>
+                      <span>Sort by date</span>
                     </li>
                     <li>
-                      <a>
-                        <span>Sort by A-Z</span>
-                      </a>
+                      <span>Sort by A-Z</span>
                     </li>
                   </ul>
                 </div>
@@ -99,46 +135,50 @@ function Favorite() {
             </div>
             <div className={favoriteStyles.favoriteContent}>
               <ul>
-                <li>
-                  <div className={favoriteStyles.authorProfile}>
-                    <a>
-                      <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD%D1%8E%D0%BA_%D0%9E._%D0%9D.jpg/417px-%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD%D1%8E%D0%BA_%D0%9E._%D0%9D.jpg"
-                        alt="author profile"
-                      />
-                      <span>Author name</span>
-                    </a>
-                  </div>
-                  <div className={favoriteStyles.favoriteArticle}>
-                    <a>
+                {state.favoriteArticles.length > 0 ? (
+                  state.favoriteArticles.map((article) => (
+                    <li key={article.article_id}>
+                      <div className={favoriteStyles.authorProfile}>
+                        <a>
+                          <img
+                            src={article.author_image}
+                            alt="author profile"
+                          />
+                          <span>
+                            {article.first_name + ' ' + article.last_name}
+                          </span>
+                        </a>
+                      </div>
                       <div
-                        className={favoriteStyles.favoriteArticleDescription}
+                        className={favoriteStyles.favoriteArticle}
+                        onClick={() => handleArticleClick(article)}
                       >
-                        <h1>Article title</h1>
-                        <span>
-                          Article description alabamadsaodsa sadas,sadas
-                          sdlsad,assets kfsafs
-                        </span>
+                        <div
+                          className={favoriteStyles.favoriteArticleDescription}
+                        >
+                          <h1>{article.title}</h1>
+                          <span>{article.description}</span>
+                        </div>
+                        <div className={favoriteStyles.favoriteArticlePhoto}>
+                          <img
+                            src={article.article_image}
+                            alt="article photo"
+                          />
+                        </div>
                       </div>
-                      <div className={favoriteStyles.favoriteArticlePhoto}>
-                        <img
-                          src="https://pz.vntu.edu.ua/media/uploads/user/35/prew/m3hf0zlcus5njkwo.jpg"
-                          alt="article photo"
-                        />
-                      </div>
-                    </a>
-                    <button
-                      className={favoriteStyles.favoriteArticleButton}
-                      onClick={handleFavoriteClick}
-                    >
-                      <i
-                        className={`ri-star-fill ${
-                          state.isFavorite ? favoriteStyles.active : ''
-                        }`}
-                      ></i>
-                    </button>
-                  </div>
-                </li>
+                      <button
+                        className={favoriteStyles.favoriteArticleButton}
+                        onClick={(e) =>
+                          handleFavoriteClick(e, article.article_id)
+                        }
+                      >
+                        <i className="ri-close-line"></i>
+                      </button>
+                    </li>
+                  ))
+                ) : (
+                  <li>No favorite articles found.</li>
+                )}
               </ul>
             </div>
           </>

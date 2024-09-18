@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { fetchUserProfile } from '../../api/routes/authorization';
+import { fetchUserProfile, fetchSignOut } from '../../api/routes/authorization';
 import profileStyles from '../../css/header/profile.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function Profile() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -28,6 +30,10 @@ function Profile() {
 
   const toggleProfileMenu = () => {
     setIsProfileOpen((prevState) => !prevState);
+  };
+  const handleSignOut = () => {
+    fetchSignOut();
+    navigate('/');
   };
 
   if (loading) {
@@ -84,7 +90,13 @@ function Profile() {
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSignOut();
+                  }}
+                >
                   <i className="ri-logout-box-line"></i>
                   <span>Sign out</span>
                 </a>

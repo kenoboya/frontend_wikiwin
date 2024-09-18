@@ -1,7 +1,5 @@
-import { clearTokens } from './authorization';
 export const submitRegistration = async (data) => {
   try {
-    clearTokens();
     const response = await fetch('/sign-up', {
       method: 'POST',
       headers: {

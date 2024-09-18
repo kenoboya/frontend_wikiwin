@@ -13,13 +13,13 @@
 }
 
 .mw-float-right::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/src/assets/background/stars.png") no-repeat center center;
+  background: url('/src/assets/background/stars.png') no-repeat center center;
   background-size: cover;
   z-index: -1;
   transform: rotate(180deg);
@@ -42,6 +42,39 @@
   margin-bottom: 25px;
 }
 
+.mw-article-favorite {
+  position: absolute;
+  right: 6px;
+  top: 15px;
+}
+
+.mw-article-favorite button {
+  color: transparent;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.mw-article-favorite i {
+  color: rgb(23, 228, 81);
+  font-size: 32px;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3), -1px -1px 0px rgba(0, 0, 0, 0.3),
+    1px -1px 0px rgba(0, 0, 0, 0.3), -1px 1px -1px rgba(0, 0, 0, 0.3);
+  transition: color 0.3s;
+}
+
+.mw-article-favorite i:hover {
+  color: rgba(23, 228, 81, 0.8);
+}
+
+.mw-article-favorite.active i {
+  color: rgb(255, 0, 0);
+}
+
+.mw-article-favorite.active i:hover {
+  color: rgba(255, 0, 0, 0.8);
+}
+
 .mw-article-title h1 {
   color: whitesmoke;
   margin-top: 2px;
@@ -53,7 +86,7 @@
 }
 
 .mw-article-title h1::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -10px;
   left: 0;
@@ -63,7 +96,7 @@
 
 .mw-content {
   font-size: 18px;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Times New Roman', Times, serif;
   color: whitesmoke;
   display: flex;
   flex-direction: column;
@@ -83,7 +116,7 @@
 }
 
 .mw-content > div:not(:last-child)::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -10px;
   left: 20px;
@@ -93,7 +126,7 @@
 
 .mw-content h5 {
   font-size: 18px;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Times New Roman', Times, serif;
   margin: 0;
 }
 
