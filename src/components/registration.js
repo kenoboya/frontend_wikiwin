@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import signUpStyles from '../css/sign-up.module.css';
 import { submitRegistration } from '../api/routes/registration';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../api/auth-context';
 
 const getCountriesAndCities = () => {
   return {
@@ -13,6 +14,7 @@ const getCountriesAndCities = () => {
 
 function Registration() {
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth();
   const [birthDate, setBirthDate] = useState('');
   const [gender, setGender] = useState('');
   const [country, setCountry] = useState('');
@@ -87,12 +89,12 @@ function Registration() {
 
       try {
         await submitRegistration(data);
-        console.log('Form submitted successfully');
+        authLogin(); // Обновление состояния аутентификации
+        navigate('/articles/create');
       } catch (error) {
         console.error('Form submission failed');
       }
     }
-    navigate('/');
   };
 
   return (
@@ -116,7 +118,6 @@ function Registration() {
           {formErrors.username && (
             <div className={signUpStyles.error}>{formErrors.username}</div>
           )}
-
           <label className={signUpStyles.labelText} htmlFor="email">
             Email
           </label>
@@ -133,7 +134,6 @@ function Registration() {
           {formErrors.email && (
             <div className={signUpStyles.error}>{formErrors.email}</div>
           )}
-
           <label className={signUpStyles.labelText} htmlFor="password">
             Password
           </label>
@@ -150,7 +150,6 @@ function Registration() {
           {formErrors.password && (
             <div className={signUpStyles.error}>{formErrors.password}</div>
           )}
-
           <label className={signUpStyles.labelText} htmlFor="confirm-password">
             Confirm password
           </label>
@@ -169,7 +168,6 @@ function Registration() {
               {formErrors.confirmPassword}
             </div>
           )}
-
           <label className={signUpStyles.labelText} htmlFor="first-name">
             First name
           </label>
@@ -186,7 +184,6 @@ function Registration() {
           {formErrors.firstName && (
             <div className={signUpStyles.error}>{formErrors.firstName}</div>
           )}
-
           <label className={signUpStyles.labelText} htmlFor="last-name">
             Last name
           </label>
@@ -203,7 +200,6 @@ function Registration() {
           {formErrors.lastName && (
             <div className={signUpStyles.error}>{formErrors.lastName}</div>
           )}
-
           <label className={signUpStyles.labelText} htmlFor="birth-date">
             Birth date
           </label>
@@ -219,7 +215,6 @@ function Registration() {
           {formErrors.birthDate && (
             <div className={signUpStyles.error}>{formErrors.birthDate}</div>
           )}
-
           <div className={signUpStyles.genderField}>
             <label className={signUpStyles.labelText}>Gender</label>
             <label>
@@ -256,7 +251,6 @@ function Registration() {
           {formErrors.gender && (
             <div className={signUpStyles.error}>{formErrors.gender}</div>
           )}
-
           <div className={signUpStyles.countryField}>
             <label className={signUpStyles.labelText} htmlFor="country">
               Country
@@ -276,7 +270,6 @@ function Registration() {
               ))}
             </select>
           </div>
-
           {country && (
             <div className={signUpStyles.cityField}>
               <label className={signUpStyles.labelText} htmlFor="city">
@@ -298,7 +291,6 @@ function Registration() {
               </select>
             </div>
           )}
-
           <label className={signUpStyles.labelText} htmlFor="image">
             Image URL
           </label>

@@ -12,6 +12,9 @@ import Header from './components/header/header';
 import UserProfile from './components/profile';
 import Login from './components/login';
 import Registration from './components/registration';
+import CreateArticle from './components/article/create/create';
+import { AuthProvider } from './api/auth-context';
+import PrivateRoute from './api/routes/private-route';
 
 function Layout() {
   const location = useLocation();
@@ -27,6 +30,10 @@ function Layout() {
         <Route path="/profile/:username" element={<UserProfile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
+        <Route
+          path="/articles/create"
+          element={<PrivateRoute element={CreateArticle} />}
+        />
       </Routes>
       {!hideHeaderFooter && <Footer />}
     </div>
@@ -35,9 +42,11 @@ function Layout() {
 
 function App() {
   return (
-    <Router>
-      <Layout />
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Layout />
+      </Router>
+    </AuthProvider>
   );
 }
 

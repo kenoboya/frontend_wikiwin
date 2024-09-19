@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import signUpStyles from '../css/sign-up.module.css';
 import { useNavigate } from 'react-router-dom';
 import { submitLogin } from '../api/routes/authentication';
+import { useAuth } from '../api/auth-context';
 
 function Login() {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [formErrors, setFormErrors] = useState({});
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth();
 
   const handleLoginChange = (e) => setLogin(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -27,15 +29,14 @@ function Login() {
         login,
         password,
       };
-      console.log('Data to submit:', data);
       try {
-        await submitLogin(data);
-        console.log('Form submitted successfully');
+        await submitLogin(data, { withCredentials: true });
+        authLogin(); // Обновление состояния аутентификации
+        navigate('/articles/create');
       } catch (error) {
         console.error('Form submission failed:', error);
       }
     }
-    navigate('/');
   };
 
   return (
