@@ -19,7 +19,7 @@ function Registration() {
   const [gender, setGender] = useState('');
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(null);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [username, setUsername] = useState('');
@@ -41,7 +41,7 @@ function Registration() {
     setCity(''); // Reset city when country changes
   };
   const handleCityChange = (e) => setCity(e.target.value);
-  const handleImageChange = (e) => setImage(e.target.value);
+  const handleImageChange = (e) => setImage(e.target.files[0]);
   const handleUsernameChange = (e) => setUsername(e.target.value);
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -83,12 +83,17 @@ function Registration() {
           gender,
           country: country || null, // Set to null if empty
           city: city || null, // Set to null if empty
-          image: image || null, // Set to null if empty
         },
       };
 
+      const formData = new FormData();
+      formData.append('data', JSON.stringify(data));
+      if (image) {
+        formData.append('image', image);
+      }
+
       try {
-        await submitRegistration(data);
+        await submitRegistration(formData);
         authLogin(); // Обновление состояния аутентификации
         navigate('/articles/create');
       } catch (error) {
@@ -292,22 +297,17 @@ function Registration() {
             </div>
           )}
           <label className={signUpStyles.labelText} htmlFor="image">
-            Image URL
+            Image
           </label>
           <input
             className={`${signUpStyles.inputField} ${signUpStyles.signUpInputField}`}
-            type="text"
+            type="file"
             id="image"
             name="image"
-            placeholder="Enter image URL"
-            value={image}
+            accept="image/*"
             onChange={handleImageChange}
           />
-          <button
-            className={signUpStyles.submitButton}
-            type="submit"
-            onClick={handleSubmit}
-          >
+          <button className={signUpStyles.submitButton} type="submit">
             Sign up
           </button>
         </form>

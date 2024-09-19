@@ -1,11 +1,8 @@
-export const submitRegistration = async (data) => {
+export const submitRegistration = async (formData) => {
   try {
     const response = await fetch('/sign-up', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+      body: formData,
       credentials: 'include',
     });
 

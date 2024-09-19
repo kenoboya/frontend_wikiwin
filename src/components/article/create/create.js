@@ -133,14 +133,17 @@ function CreateArticle() {
       Article: {
         Title: articleData.title,
         Description: articleData.description,
-        Image: articleData.image,
       },
       Chapters: formattedChapters,
       [infoBoxType]: infoBoxData,
       InfoBoxType: infoBoxType,
     };
 
-    createArticle(payload)
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(payload));
+    formData.append('image', articleData.image);
+
+    createArticle(formData)
       .then((data) => {
         console.log('Success:', data);
         // Redirect to the main page

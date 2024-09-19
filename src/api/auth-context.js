@@ -4,7 +4,7 @@ import { fetchSignOut } from './routes/authorization';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(undefined); // Изначально undefined
 
   useEffect(() => {
     const verifyAuth = async () => {

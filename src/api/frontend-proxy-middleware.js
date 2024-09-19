@@ -3,7 +3,7 @@ const express = require('express');
 
 const app = express();
 
-const frontendProxyMiddleware = createProxyMiddleware({
+const apiProxyMiddleware = createProxyMiddleware({
   target: 'http://localhost:8080',
   changeOrigin: true,
   pathRewrite: {
@@ -11,7 +11,7 @@ const frontendProxyMiddleware = createProxyMiddleware({
   },
 });
 
-app.use(frontendProxyMiddleware);
+app.use(apiProxyMiddleware);
 
 app.listen(3001, () => {
   console.log('Proxy server is running on http://localhost:3001');

@@ -84,7 +84,7 @@ function Profile() {
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="/articles/create">
                   <i className="ri-pencil-line"></i>
                   <span>Create Article</span>
                 </a>
