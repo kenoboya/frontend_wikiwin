@@ -13,7 +13,7 @@ export async function fetchSignOut() {
   }
 }
 
-const refreshToken = async () => {
+export const refreshToken = async () => {
   try {
     const response = await fetch('/refresh', {
       method: 'GET',

@@ -12,7 +12,7 @@ function CreateArticle() {
   const [articleData, setArticleData] = useState({
     title: '',
     description: '',
-    image: '',
+    image: null, // Ensure this is null initially
   });
   const [chapters, setChapters] = useState([
     { title: '', description: '', subChapters: [] },
@@ -135,23 +135,27 @@ function CreateArticle() {
         Description: articleData.description,
       },
       Chapters: formattedChapters,
-      [infoBoxType]: infoBoxData,
-      InfoBoxType: infoBoxType,
+      InfoBoxType: infoBoxType, // Ensure InfoBoxType is correctly set
     };
+
+    // Dynamically add the infoBoxData with the correct key
+    if (infoBoxType) {
+      payload[infoBoxType] = infoBoxData;
+    }
 
     const formData = new FormData();
     formData.append('data', JSON.stringify(payload));
-    formData.append('image', articleData.image);
+    if (articleData.image) {
+      formData.append('image', articleData.image); // Ensure the key is "image"
+    }
 
     createArticle(formData)
       .then((data) => {
         console.log('Success:', data);
-        // Redirect to the main page
         navigate('/');
       })
       .catch((error) => {
         console.error('Error:', error);
-        // Handle error (e.g., show an error message)
       });
   };
 

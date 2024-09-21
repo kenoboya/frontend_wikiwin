@@ -94,7 +94,7 @@
 }
 
 .nav-links a::after {
-  content: "";
+  content: '';
   display: block;
   width: 2px;
   height: 100%;

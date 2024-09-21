@@ -12,14 +12,12 @@ export const fetchArticle = async (formattedTitle) => {
   }
 };
 
-export async function createArticle(articleData) {
+export async function createArticle(formData) {
+  console.log(formData);
   try {
     const response = await fetch('/articles/create', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(articleData),
+      body: formData,
     });
     if (!response.ok) {
       throw new Error('Network response was not ok');

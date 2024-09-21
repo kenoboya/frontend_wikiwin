@@ -68,12 +68,37 @@
 .favoriteContent {
   display: flex;
   flex-direction: column;
+  max-height: 400px; /* Set a max height for the scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Custom scrollbar styles */
+.favoriteContent::-webkit-scrollbar {
+  width: 6px; /* Set the width of the scrollbar */
+}
+
+.favoriteContent::-webkit-scrollbar-track {
+  background-color: #333; /* Set the background of the scrollbar track */
+}
+
+.favoriteContent::-webkit-scrollbar-thumb {
+  background-color: rgb(255, 0, 0); /* Set the color of the scrollbar thumb */
+  border-radius: 2px; /* Optional: round the corners of the scrollbar thumb */
+}
+
+.favoriteContent::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(
+    255,
+    0,
+    0
+  ); /* Set the color of the scrollbar thumb on hover */
 }
 
 .favoriteContent ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 100%; /* Ensure the ul takes full width */
 }
 
 .favoriteContent li {
@@ -86,6 +111,7 @@
 .favoriteContent li:last-child {
   border-bottom: none;
 }
+
 .authorProfile {
   display: flex;
   flex-direction: column;
@@ -119,7 +145,7 @@
 .favoriteArticle {
   display: flex;
   align-items: center;
-  padding: 0px 10px 0px 0px;
+  padding: 0px 5px 0px 0px;
   cursor: pointer;
 }
 
@@ -160,7 +186,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0px 0px 0px 0px;
+  padding: 0px 2px 0px 0px;
   margin: 0;
 }
 

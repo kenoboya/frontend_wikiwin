@@ -25,8 +25,9 @@ function InfoBox({ onChange }) {
 
   const handleTypeChange = (selectedOption) => {
     setSelectedType(selectedOption);
-    setInfoBoxData({});
-    onChange({}, selectedOption.value);
+    const newData = {};
+    setInfoBoxData(newData);
+    onChange(newData, selectedOption.value);
   };
 
   const handleFieldChange = (field, value) => {
@@ -250,13 +251,13 @@ function InfoBox({ onChange }) {
         return (
           <>
             <div className={stageStyle.form_group}>
-              <label htmlFor="name">Name</label>
+              <label htmlFor="title">Title</label>
               <input
                 type="text"
-                id="name"
-                name="name"
+                id="title"
+                name="title"
                 className={stageStyle.input}
-                onChange={(e) => handleFieldChange('name', e.target.value)}
+                onChange={(e) => handleFieldChange('title', e.target.value)}
               />
             </div>
             <div className={stageStyle.form_group}>
@@ -270,26 +271,38 @@ function InfoBox({ onChange }) {
               />
             </div>
             <div className={stageStyle.form_group}>
-              <label htmlFor="location">Location</label>
+              <label htmlFor="locations">Locations</label>
               <input
                 type="text"
-                id="location"
-                name="location"
+                id="locations"
+                name="locations"
                 className={stageStyle.input}
-                onChange={(e) => handleFieldChange('location', e.target.value)}
+                onChange={(e) => handleFieldChange('locations', e.target.value)}
               />
             </div>
             <div className={stageStyle.form_group}>
-              <label htmlFor="description">Description</label>
-              <textarea
-                id="description"
-                name="description"
-                className={stageStyle.textarea}
-                rows="4"
+              <label htmlFor="organizers">Organizers</label>
+              <input
+                type="text"
+                id="organizers"
+                name="organizers"
+                className={stageStyle.input}
                 onChange={(e) =>
-                  handleFieldChange('description', e.target.value)
+                  handleFieldChange('organizers', e.target.value)
                 }
-              ></textarea>
+              />
+            </div>
+            <div className={stageStyle.form_group}>
+              <label htmlFor="attendance">Attendance</label>
+              <input
+                type="number"
+                id="attendance"
+                name="attendance"
+                className={stageStyle.input}
+                onChange={(e) =>
+                  handleFieldChange('attendance', e.target.value)
+                }
+              />
             </div>
           </>
         );
@@ -558,16 +571,6 @@ function InfoBox({ onChange }) {
                 onChange={(e) => handleFieldChange('diet', e.target.value)}
               />
             </div>
-            <div className={stageStyle.form_group}>
-              <label htmlFor="lifespan">Lifespan</label>
-              <input
-                type="text"
-                id="lifespan"
-                name="lifespan"
-                className={stageStyle.input}
-                onChange={(e) => handleFieldChange('lifespan', e.target.value)}
-              />
-            </div>
           </>
         );
       case 'award':
@@ -603,16 +606,6 @@ function InfoBox({ onChange }) {
                 onChange={(e) => handleFieldChange('year', e.target.value)}
               />
             </div>
-            <div className={stageStyle.form_group}>
-              <label htmlFor="recipient">Recipient</label>
-              <input
-                type="text"
-                id="recipient"
-                name="recipient"
-                className={stageStyle.input}
-                onChange={(e) => handleFieldChange('recipient', e.target.value)}
-              />
-            </div>
           </>
         );
       case 'song':
@@ -636,16 +629,6 @@ function InfoBox({ onChange }) {
                 name="artist"
                 className={stageStyle.input}
                 onChange={(e) => handleFieldChange('artist', e.target.value)}
-              />
-            </div>
-            <div className={stageStyle.form_group}>
-              <label htmlFor="album">Album</label>
-              <input
-                type="text"
-                id="album"
-                name="album"
-                className={stageStyle.input}
-                onChange={(e) => handleFieldChange('album', e.target.value)}
               />
             </div>
             <div className={stageStyle.form_group}>
@@ -676,13 +659,13 @@ function InfoBox({ onChange }) {
         return (
           <>
             <div className={stageStyle.form_group}>
-              <label htmlFor="name">Name</label>
+              <label htmlFor="fullName">Full Name</label>
               <input
                 type="text"
-                id="name"
-                name="name"
+                id="fullName"
+                name="fullName"
                 className={stageStyle.input}
-                onChange={(e) => handleFieldChange('name', e.target.value)}
+                onChange={(e) => handleFieldChange('full_name', e.target.value)}
               />
             </div>
             <div className={stageStyle.form_group}>
@@ -708,9 +691,20 @@ function InfoBox({ onChange }) {
               />
             </div>
             <div className={stageStyle.form_group}>
-              <label htmlFor="area">Area (sq km)</label>
+              <label htmlFor="region">Region</label>
+              <input
+                type="text"
+                id="region"
+                name="region"
+                className={stageStyle.input}
+                onChange={(e) => handleFieldChange('region', e.target.value)}
+              />
+            </div>
+            <div className={stageStyle.form_group}>
+              <label htmlFor="area">Area</label>
               <input
                 type="number"
+                step="0.01"
                 id="area"
                 name="area"
                 className={stageStyle.input}
@@ -728,13 +722,15 @@ function InfoBox({ onChange }) {
               />
             </div>
             <div className={stageStyle.form_group}>
-              <label htmlFor="language">Official Language</label>
+              <label htmlFor="officialLanguage">Official Language</label>
               <input
                 type="text"
-                id="language"
-                name="language"
+                id="officialLanguage"
+                name="officialLanguage"
                 className={stageStyle.input}
-                onChange={(e) => handleFieldChange('language', e.target.value)}
+                onChange={(e) =>
+                  handleFieldChange('official_language', e.target.value)
+                }
               />
             </div>
           </>
@@ -775,27 +771,13 @@ function InfoBox({ onChange }) {
               />
             </div>
             <div className={stageStyle.form_group}>
-              <label htmlFor="studentCount">Student Count</label>
+              <label htmlFor="students">Students</label>
               <input
                 type="number"
-                id="studentCount"
-                name="studentCount"
+                id="students"
+                name="students"
                 className={stageStyle.input}
-                onChange={(e) =>
-                  handleFieldChange('student_count', e.target.value)
-                }
-              />
-            </div>
-            <div className={stageStyle.form_group}>
-              <label htmlFor="facultyCount">Faculty Count</label>
-              <input
-                type="number"
-                id="facultyCount"
-                name="facultyCount"
-                className={stageStyle.input}
-                onChange={(e) =>
-                  handleFieldChange('faculty_count', e.target.value)
-                }
+                onChange={(e) => handleFieldChange('students', e.target.value)}
               />
             </div>
           </>
@@ -836,25 +818,15 @@ function InfoBox({ onChange }) {
               />
             </div>
             <div className={stageStyle.form_group}>
-              <label htmlFor="collectionSize">Collection Size</label>
-              <input
-                type="number"
-                id="collectionSize"
-                name="collectionSize"
-                className={stageStyle.input}
-                onChange={(e) =>
-                  handleFieldChange('collection_size', e.target.value)
-                }
-              />
-            </div>
-            <div className={stageStyle.form_group}>
-              <label htmlFor="director">Director</label>
+              <label htmlFor="collections">Collections</label>
               <input
                 type="text"
-                id="director"
-                name="director"
+                id="collections"
+                name="collections"
                 className={stageStyle.input}
-                onChange={(e) => handleFieldChange('director', e.target.value)}
+                onChange={(e) =>
+                  handleFieldChange('collections', e.target.value)
+                }
               />
             </div>
           </>
@@ -870,6 +842,16 @@ function InfoBox({ onChange }) {
                 name="name"
                 className={stageStyle.input}
                 onChange={(e) => handleFieldChange('name', e.target.value)}
+              />
+            </div>
+            <div className={stageStyle.form_group}>
+              <label htmlFor="party">Party</label>
+              <input
+                type="text"
+                id="party"
+                name="party"
+                className={stageStyle.input}
+                onChange={(e) => handleFieldChange('party', e.target.value)}
               />
             </div>
             <div className={stageStyle.form_group}>
@@ -904,16 +886,6 @@ function InfoBox({ onChange }) {
                 onChange={(e) => handleFieldChange('term_end', e.target.value)}
               />
             </div>
-            <div className={stageStyle.form_group}>
-              <label htmlFor="party">Party</label>
-              <input
-                type="text"
-                id="party"
-                name="party"
-                className={stageStyle.input}
-                onChange={(e) => handleFieldChange('party', e.target.value)}
-              />
-            </div>
           </>
         );
       default:
@@ -922,22 +894,14 @@ function InfoBox({ onChange }) {
   };
 
   return (
-    <div className={stageStyle.stage_infobox}>
-      <div
-        className={`${stageStyle.form_group} ${stageStyle.select_container}`}
-      >
-        <label htmlFor="infobox-type">InfoBox Type</label>
-        <Select
-          id="infobox-type"
-          name="infobox-type"
-          className={stageStyle.input}
-          value={selectedType}
-          onChange={handleTypeChange}
-          options={infoBoxTypes}
-          required
-        />
-      </div>
-      {renderFields()}
+    <div>
+      <Select
+        options={infoBoxTypes}
+        onChange={handleTypeChange}
+        value={selectedType}
+        placeholder="Select InfoBox Type"
+      />
+      {selectedType && renderFields()}
     </div>
   );
 }
